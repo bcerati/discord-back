@@ -19,7 +19,8 @@ class ServerRepository extends ServiceEntityRepository implements ServerGatewayI
     {
         $qb = $this->createQueryBuilder('s')
             ->leftJoin('s.image', 'i')
-            ->addSelect('i');
+            ->addSelect('i')
+            ->orderBy('s.createdAt', 'ASC');
 
         return $qb->getQuery()->getResult();
     }
