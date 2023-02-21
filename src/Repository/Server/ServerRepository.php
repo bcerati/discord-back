@@ -42,6 +42,8 @@ class ServerRepository extends ServiceEntityRepository implements ServerGatewayI
         $qb = $this->_em->createQueryBuilder()
             ->select('sc')
             ->from(ServerCategory::class, 'sc')
+            ->innerJoin('sc.channels', 'scc')
+            ->addSelect('scc')
             ->where('sc.server = :serverId')
             ->setParameter('serverId', $server->getId());
 
