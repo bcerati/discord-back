@@ -23,15 +23,15 @@ class Channel
     #[GeneratedValue(strategy: 'CUSTOM')]
     #[Column(type: UuidType::NAME, unique: true)]
     #[CustomIdGenerator(class: UuidGenerator::class)]
-    #[Groups(['server:category'])]
+    #[Groups(['server:category', 'channel'])]
     protected string $id;
 
     #[Column(type: 'string', length: 30)]
-    #[Groups(['server:category'])]
+    #[Groups(['server:category', 'channel'])]
     protected string $name;
 
     #[Column(type: 'datetime_immutable')]
-    #[Groups(['server:category'])]
+    #[Groups(['server:category', 'channel'])]
     protected DateTimeImmutable $createdAt;
 
     #[ManyToOne(targetEntity: Server::class)]
