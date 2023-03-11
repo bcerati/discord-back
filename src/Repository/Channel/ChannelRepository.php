@@ -20,6 +20,8 @@ class ChannelRepository extends ServiceEntityRepository implements ChannelGatewa
         $qb = $this->_em->createQueryBuilder()
             ->from(Message::class, 'm')
             ->addSelect('m')
+            ->innerJoin('m.user', 'u')
+            ->addSelect('u')
             ->where('m.channel = :channelId')
             ->setParameter('channelId', $channelId)
             ->orderBy('m.createdAt', 'ASC');

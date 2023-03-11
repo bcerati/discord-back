@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\Table;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -39,6 +40,11 @@ class Message
 
     #[ManyToOne(targetEntity: Channel::class)]
     protected Channel $channel;
+
+    #[ManyToOne(targetEntity: User::class)]
+    #[JoinColumn(nullable: false)]
+    #[Groups(['channel_messages'])]
+    protected User $user;
 
     public function getId(): string
     {
@@ -96,6 +102,18 @@ class Message
     public function setChannel(Channel $channel): Message
     {
         $this->channel = $channel;
+
+        return $this;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): Message
+    {
+        $this->user = $user;
 
         return $this;
     }

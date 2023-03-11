@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[Entity]
 #[Table(name: 'users')]
@@ -22,10 +23,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[GeneratedValue(strategy: 'CUSTOM')]
     #[Column(type: UuidType::NAME, unique: true)]
     #[CustomIdGenerator(class: UuidGenerator::class)]
+    #[Groups(['channel_messages'])]
     protected string $id;
 
     #[Column(type: 'string', unique: true)]
+    #[Groups(['channel_messages'])]
     protected string $email;
+
+    #[Column(type: 'string', length: 50)]
+    #[Groups(['channel_messages'])]
+    protected string $firstName;
+
+    #[Column(type: 'string', length: 50)]
+    #[Groups(['channel_messages'])]
+    protected string $lastName;
 
     #[Column(type: 'json')]
     protected array $roles = [];
@@ -35,6 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected string $password;
 
     #[Column(type: 'datetime_immutable')]
+    #[Groups(['channel_messages'])]
     protected DateTimeImmutable $createdAt;
 
     public function __construct()
@@ -62,6 +74,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): User
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): User
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): User
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }
